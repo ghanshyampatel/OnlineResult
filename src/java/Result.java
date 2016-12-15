@@ -34,6 +34,19 @@ public class Result extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+                    String num=request.getParameter("roll");
+             String subjectName[];
+             int subjectCode[];
+             int e_marksObtained[];
+             int e_minMarks[];
+           int e_maxMarks[];
+          
+          int i_marksObtained[];
+          int i_minMarks[];
+          int i_maxMarks[];
+           int id = 0 ;
+           String first = null;
+           String last = null;
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
@@ -44,9 +57,7 @@ public class Result extends HttpServlet {
             out.println("<body>");
       
             
-            String num=request.getParameter("roll");
-             
-             
+
              
              // Loading required libraries
 
@@ -57,7 +68,7 @@ public class Result extends HttpServlet {
 
       //  Database credentials
         final String USER = "root";
-        final String PASS = "";
+        final String PASS = "tiger";
  
       String title = "Online Result";
       
@@ -75,23 +86,72 @@ public class Result extends HttpServlet {
          // Execute SQL query
          Statement stmt = conn.createStatement();
          String sql;
-         sql = "SELECT * FROM student where student_ID="+num;
+         sql = "select su.subject_name,s.student_id,s.fname,s.lname,e.subject_code,e.e_marksObtained,\n" +
+"e.e_maxMarks,e.e_minMarks,i.i_marksObtained,\n" +
+"i.i_maxMarks,i.i_minMarks from student s, externalmarks e ,subject su, internalmarks i \n" +
+"where s.student_id=i.student_id and s.student_id=e.student_id and su.subject_code=e.subject_code \n" +
+"and su.subject_code=i.subject_code and s.student_id="+num;
          ResultSet rs = stmt.executeQuery(sql);
-
+         int walker=0;
          // Extract data from result set
+         rs.last();
+          int size=rs.getRow();
           
+           subjectName=new String[size];
+          
+           subjectCode=new int[size];
+           e_marksObtained=new int[size];
+           e_minMarks=new int[size];
+           e_maxMarks=new int[size];
+          
+           i_marksObtained=new int[size];
+           i_minMarks=new int[size];
+           i_maxMarks=new int[size];
+           
+           
+          rs.beforeFirst();
              while(rs.next()){
             //Retrieve by column name
-            int id  = rs.getInt("student_ID");
-            String first = rs.getString("fname");
-            String last = rs.getString("lname");
-
-            //Display values
-            out.println("ID: " + id + "<br>"); 
-            out.println("First: " + first + "<br>");
-            out.println("Last: " + last + "<br>");
+              id  = rs.getInt("student_ID");
+              first = rs.getString("fname");
+              last = rs.getString("lname");            
+              
+           subjectName[walker]=rs.getString("subject_name");
+          
+           subjectCode[walker]=rs.getInt("subject_code");
+           e_marksObtained[walker]=rs.getInt("e_marksobtained");
+           e_minMarks[walker]=rs.getInt("e_minMarks");
+           e_maxMarks[walker]=rs.getInt("e_maxmarks");
+          
+           i_marksObtained[walker]=rs.getInt("i_marksObtained");
+           i_minMarks[walker]=rs.getInt("i_minMarks");
+           i_maxMarks[walker]=rs.getInt("i_maxMarks");
+           walker++;
          } 
+             walker=0;
+              //Display values
+            out.println("Roll Number: " + id + "<br>"); 
+            out.println("First Name: " + first + "<br>");
+            out.println("Last Name: " + last + "<br>");
+        // out.println(size);
+         out.println("<table border=2>");
+         out.println("<tr> <th> subject name </th> <th> subject code </th> <th> External marks obtained </th>  <th> External marks Minimum </th> <th> External marks maximum </th> <th> Internal marks obtained </th>  <th> internal marks Minimum </th> <th> internal marks maximum </th> </tr>  ");
          
+         for(int i=0;i<size;i++)
+         {
+           out.println(" <td> " +subjectName[i] +"</td>");
+          
+           out.println("<td> "+ subjectCode[i] + "</td>");
+           out.println("<td> "+e_marksObtained[i]+ "</td>");
+           out.println("<td> "+e_minMarks[i]+"</td>");
+           out.println("<td> "+e_maxMarks[i]+"</td>");
+          
+           out.println("<td> "+i_marksObtained[i]+"</td>");
+           out.println("<td>"+i_minMarks[i]+"</td>");
+           out.println("<td>"+i_maxMarks[i]+"</td> </tr>");  
+         }
+         
+         out.println("</table>");
          // Clean-up environment
          rs.close();
          stmt.close();
