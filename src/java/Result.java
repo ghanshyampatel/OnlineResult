@@ -87,10 +87,10 @@ public class Result extends HttpServlet {
          Statement stmt = conn.createStatement();
          String sql;
          sql = "select su.subject_name,s.student_id,s.fname,s.lname,e.subject_code,e.e_marksObtained,\n" +
-"e.e_maxMarks,e.e_minMarks,i.i_marksObtained,\n" +
-"i.i_maxMarks,i.i_minMarks from student s, externalmarks e ,subject su, internalmarks i \n" +
-"where s.student_id=i.student_id and s.student_id=e.student_id and su.subject_code=e.subject_code \n" +
-"and su.subject_code=i.subject_code and s.student_id="+num;
+                    "e.e_maxMarks,e.e_minMarks,i.i_marksObtained,\n" +
+                    "i.i_maxMarks,i.i_minMarks from student s, externalmarks e ,subject su, internalmarks i \n" +
+                    "where s.student_id=i.student_id and s.student_id=e.student_id and su.subject_code=e.subject_code \n" +
+                    "and su.subject_code=i.subject_code and s.student_id="+num;
          ResultSet rs = stmt.executeQuery(sql);
          int walker=0;
          // Extract data from result set

@@ -19,17 +19,22 @@ and open the template in the editor.
 </head>
 
 <body>
-    <br> <br><br> <br><br> <br><br> <br><br> 
-    <form method="get" action="Result">
+    <form action="Result" method="get">
 	<div class="login">
-            <br> <br>
-    <input type="text" placeholder="Roll Number" id="roll" name="roll">    
-    <br> 
-  <input type="submit" value="Check Result">
-</div>
-    </form>
-<div class="shadow"></div>
+		<div class="login-screen">
+			<div class="app-title">
+				<h1>Online Result</h1>
+			</div>
 
-
+			<div class="login-form">
+				<div class="control-group">
+				<input type="text" class="login-field" value="" placeholder="Enter Roll Number" name="roll">
+				<label></label>
+                                </div>
+				<input type="submit" class="btn" value="Search">
+			</div>
+		</div>
+	</div>
+</form>
 </body>	
 </html>
