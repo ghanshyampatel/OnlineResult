@@ -52,7 +52,8 @@ public class Result extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>  Result</title>");            
+            out.println("<title>  Result</title>"); 
+            out.println("<link rel=\"stylesheet\" href=\"result.css\">");
             out.println("</head>");
             out.println("<body>");
       
@@ -130,12 +131,12 @@ public class Result extends HttpServlet {
          } 
              walker=0;
               //Display values
-            out.println("Roll Number: " + id + "<br>"); 
+            out.println("<h4>Roll Number: " + id + "<br>"); 
             out.println("First Name: " + first + "<br>");
-            out.println("Last Name: " + last + "<br>");
+            out.println("Last Name: " + last + "<br></h4>");
         // out.println(size);
-         out.println("<table border=2>");
-         out.println("<tr> <th> subject name </th> <th> subject code </th> <th> External marks obtained </th>  <th> External marks Minimum </th> <th> External marks maximum </th> <th> Internal marks obtained </th>  <th> internal marks Minimum </th> <th> internal marks maximum </th> </tr>  ");
+         out.println("<table border=0 cellpadding=10>");
+         out.println("<tr> <th> subject name   </th> <th> subject code </th> <th> External marks obtained </th>  <th> External marks Minimum </th> <th> External marks maximum </th> <th> Internal marks obtained </th>  <th> internal marks Minimum </th> <th> internal marks maximum </th> </tr>  ");
          
          for(int i=0;i<size;i++)
          {
